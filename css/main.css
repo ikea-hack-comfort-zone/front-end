@@ -1,0 +1,17 @@
+body
+{
+    background: #ededed;
+}
+
+.sensor-data
+{
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    border: #DEDEDE;
+    background: #ddd;
+    border-radius:9999px;
+    text-align: center;
+    line-height: 300px;
+    font-size: 50px;
+}
