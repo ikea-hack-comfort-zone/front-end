@@ -1,5 +1,16 @@
 var server_addres = "http://128.199.60.134:3000/api/sensor-data";
 
+var edisons = {
+            1: {
+                'LatLng': [52.0126500, 4.3815000],
+                'class':'circle-a'
+            },
+            2: {
+                'LatLng': [52.0123000, 4.3818000],
+                'class':'circle-b'
+            }
+        };
+        
 $(document).ready(function()
 {
     map = L.map('map').setView([51.505, -0.09], 13);
@@ -19,51 +30,39 @@ $(document).ready(function()
 
     L.geoJson(data, {color: "#2c3e50", weight: 1}).addTo(map);
 
-    circle_a = L.circle([52.0131627, 4.3799595], 10).setStyle({className: "circle circle-a"}).addTo(map);
-    circle_b = L.circle([52.0161627, 4.3729595], 10).setStyle({className: "circle circle-b"}).addTo(map);
+    Object.keys(edisons).forEach(function(item, index)
+    {
+        edisons[item].circle = L.circle(edisons[item].LatLng, 10).setStyle({className: "circle " + edisons[item].class}).addTo(map);
+    });
 
-    window.setInterval(function()
+    update();
+
+    function update()
     {
         $.getJSON( server_addres, function( data ) 
         {
-            var device_1 = data[1],
-                   device_2 = data[2];
+                Object.keys(data).forEach(function(item, index)
+                {
+                    var device = data[item],
+                           color = device.temp < 22 ? '#2980b9' : '#e74c3c';
 
-            if(device_1)
-            {
-                //Set radius and latlng
-                //circle_a.setRadius(device_1.sound - 100);
-                circle_a.setLatLng([52.0126500, 4.3815000]);
-                //circle_a.setLatLng([52.0123000, 4.3818000]);
-                $('.circle-a').css('-webkit-transform', "scale("+ 3.60674 * Math.log(0.0131951 * device_1.sound) +")");
+                   //change the style with an awesome animation
+                   $('.'+edisons[item].class).css('-webkit-transform', "scale("+ 3.60674 * Math.log(0.0131951 * device.sound) +")");
 
-                                                                           //blue -         red
-                var color = device_1.temp < 22 ? '#2980b9' : '#e74c3c';
-
-                circle_a.setStyle(
+                                                                        //blue -         red
+                   var color = device.temp < 22 ? '#2980b9' : '#e74c3c';
+                
+                    edisons[item].circle.setStyle(
+                        {
+                            color: color, 
+                            weight: 0
+                        });
+                    });       
+                
+                    setTimeout(function()
                     {
-                        color: color, 
-                        weight: 0
-                    });
-
-                // $('.temp').html('Temp: '+data.temp);
-                // $('.mic').html('Mic: '+data.sound);
-            }
-
-            if(device_2)
-            {
-                var color = device_2.temp < 22 ? '#2980b9' : '#e74c3c';
-
-                //Set radius and latlng
-                //circle_b.setRadius(device_2.sound - 100);
-                //
-
-                //130
-                $('.circle-b').css('-webkit-transform', "scale("+ 3.60674 * Math.log(0.0131951 * device_2.sound) +")");
-
-                circle_b.setLatLng([52.0123000, 4.3818000]);
-                circle_b.setStyle({color: color, weight: 0});                
-            }
+                        update();
+                    }, 100);
         });
-    }, 100);
+    }
 });
