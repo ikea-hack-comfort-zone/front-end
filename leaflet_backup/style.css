@@ -1,0 +1,16 @@
+body
+{
+    padding: 0;
+    margin: 0;
+}
+#map { height: 100vh }
+
+.circle
+{
+    -webkit-transition: .1s all ease-in-out;
+    -o-transition: .1s all ease-in-out;
+    transition: .1s all ease-in-out;
+    -webkit-transform: scale(1);
+    transform-origin: 50% 50%;
+}
+

@@ -18,5 +18,5 @@ function updateDom(data)
 {
     $('.light').html('Light: '+data.light);
     $('.temp').html('Temp: '+data.temp);
-    $('.mic').html('Mic: '+data.mic);
+    $('.mic').html('Mic: '+data.sound);
 }
