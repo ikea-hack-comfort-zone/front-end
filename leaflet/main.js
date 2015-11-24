@@ -9,7 +9,19 @@ var edisons = {
             2: {
                 'LatLng': [52.0123000, 4.3818000],
                 'class':'circle-b'
-            }
+            },
+            3: {
+                'LatLng': [52.01266, 4.38094],
+                'class':'circle-c'
+            },
+            4: {
+                'LatLng': [52.01251, 4.38174],
+                'class':'circle-d'
+            },
+            5: {
+                'LatLng': [52.01236, 4.38134],
+                'class':'circle-e'
+            }             
         };
         
 $(document).ready(function()
